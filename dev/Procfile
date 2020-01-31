@@ -1,0 +1,1 @@
+web: gunicorn colombia_tokio_2020.wsgi
