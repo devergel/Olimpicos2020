@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d71de51e-7dc4-4f94-ae58-98396accb5b5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dev.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dev.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modelProject/model/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/modelProject/model/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/modelProject/model/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/modelProject/model/models.py" afterDir="false" />
@@ -50,7 +48,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1580443552861</updated>
-      <workItem from="1580557661317" duration="1864000" />
+      <workItem from="1580557661317" duration="3053000" />
     </task>
     <servers />
   </component>

@@ -37,3 +37,35 @@ class Entrenador(models.Model):
 
     def __str__(self):
         return 'Entrenador: ' + self.idEntrenador
+
+class Deporte(models.Model):
+    idDeporte = models.AutoField(primary_key=True)
+    nombre = models.CharField(max_length=100)
+
+
+    def __str__(self):
+        return 'Deporte: ' + self.idDeporte
+
+class Ciudad(models.Model):
+    idCiudad = models.AutoField(primary_key=True)
+    idPais = models.ForeignKey(Pais, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return 'Ciudad: ' + self.idCiudad
+
+
+class Deportista(models.Model):
+    idDeportista = models.AutoField(primary_key=True)
+    idEntrenador = models.ForeignKey(Entrenador, on_delete=models.CASCADE)
+    idDelegacion = models.ForeignKey(Delegacion, on_delete=models.CASCADE)
+    idCiudad = models.ForeignKey(Ciudad, on_delete=models.CASCADE)
+    nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100)
+    edad = models.IntegerField()
+    peso = models.DecimalField(max_digits=6,decimal_places=2)
+    estatura = models.DecimalField(max_digits=6,decimal_places=2)
+    foto = models.CharField(max_length=250)
+
+    def __str__(self):
+        return 'Deportista: ' + self.idDeportista
