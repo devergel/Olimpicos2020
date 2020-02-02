@@ -1,17 +1,25 @@
 from django.contrib import admin
-from .models import User
-from .models import Pais
+from .models import Usuario
+from .models import Comentario
+from .models import Participacion
+from .models import Evento
+from .models import ModadalidadDeporte
+from .models import Deporte
+from .models import DeportistaModalidad
+from .models import Deportista
+from .models import LugarNacimiento
 from .models import Delegacion
 from .models import Entrenador
-from .models import Deporte
-from .models import Ciudad
-from .models import Deportista
 
 # Register your models here.
-admin.site.register(User)
-admin.site.register(Pais)
-admin.site.register(Delegacion)
+admin.site.register(Usuario)
+admin.site.register(Comentario)
+admin.site.register(Participacion)
+admin.site.register(Evento)
+admin.site.register(ModadalidadDeporte)
 admin.site.register(Deporte)
-admin.site.register(Ciudad)
+admin.site.register(DeportistaModalidad)
 admin.site.register(Deportista)
-
+admin.site.register(LugarNacimiento)
+admin.site.register(Delegacion)
+admin.site.register(Entrenador)
