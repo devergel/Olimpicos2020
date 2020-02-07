@@ -1,0 +1,71 @@
+.centrar{
+  text-align: center;
+}
+
+h1 {
+  color: white;
+}
+
+a{
+  color: black;
+}
+
+.boton {
+  text-align: center;
+  background-color: rgb(233, 233, 233);
+  height: calc(100% - 20px);
+  margin-top: 10px;
+  border-radius: 5px;
+  vertical-align: middle;
+}
+
+.contenedorNav {
+  background-color: #343a40 !important;
+  background: linear-gradient(90deg, rgba(0, 128, 255,0.7) 0%, rgba(77, 166, 255,0) 83%);
+}
+
+.nombreDeportista {
+  max-width: 105px;
+}
+
+.deportistaContainer {
+  margin: 10px;
+  padding: 10px;
+  background-color: rgb(233, 233, 233);
+  width: 300px;
+}
+
+.imagenDeportista {
+  max-width: 150px;
+  margin-right: 10px;
+}
+
+.iconoDeporte {
+  height: 40px;
+  margin: 10px;
+}
+
+.flechas {
+  height: 30px;
+  margin: 10px;
+}
+
+.currentPage {
+  font-size: 30px;
+  margin: 5px;
+}
+
+@media only screen and (max-width: 768px) {
+
+  h1 {
+    font-size: 24px;
+  }
+
+  .contenedorNav{
+    text-align: center;
+  }
+  .boton {
+    height: 36px;
+    margin-bottom: 10px;
+  }
+}

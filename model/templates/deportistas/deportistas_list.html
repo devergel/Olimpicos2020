@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'css/deportistas.css' %}">
+  <title>Tokio 2020</title>
+</head>
+
+<body>
+  <div class="container-fluid contenedorNav">
+    <div class="row">
+      <h1 class="col-0 col-sm-0 col-md-8 col-lg-8">Colombia en Tokio 2020</h1>
+      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+        <div class="boton">
+          <a href="/login">Login</a>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+        <div class="boton">
+          <a href="/register">Register</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container centrar">
+    <h3>Deportistas que participarán</h3>
+    <div class="row justify-content-center">
+      {% for deportista in deportistas %}
+      <div class="deportistaContainer">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="row">
+            <img class="imagenDeportista"
+              src="https://res.cloudinary.com/drfggfn8f/image/upload/v1568469505/macco/bolsos/eik0rmakvxoy75ndc1ff.jpg"
+              alt="" />
+            <h4 class="nombreDeportista">{{deportista.nombre}}</h4>
+          </div>
+          <div class="row centrar">
+            {% for deporte in deportes %}
+            <div>
+              <img class="iconoDeporte" src="/static/images/{{deporte}}.svg" alt="">
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row justify-content-center">
+      {% if deportistas.has_previous %}
+      <a href="?page={{ deportistas.previous_page_number }}">
+        <img class="flechas" src="/static/images/izquierda.svg" alt="">
+      </a>
+      {% endif %}
+
+      <h6 class="currentPage">{{ deportistas.number }}</h6>
+
+      {% if deportistas.has_next %}
+      <a href="?page={{ deportistas.next_page_number }}">
+        <img class="flechas" src="/static/images/derecha.svg" alt="">
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</body>
+
+</html>
