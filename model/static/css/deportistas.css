@@ -19,6 +19,15 @@ a{
   vertical-align: middle;
 }
 
+.boton:hover{
+  transform: scale(1.1);
+  background-color: #c0bfbf;
+}
+
+.boton a{
+    margin-top: 5px;
+}
+
 .contenedorNav {
   background-color: #343a40 !important;
   background: linear-gradient(90deg, rgba(0, 128, 255,0.7) 0%, rgba(77, 166, 255,0) 83%);
@@ -29,10 +38,11 @@ a{
 }
 
 .deportistaContainer {
+  border: rgba(161, 161, 255, 0.5) 1px solid;
   margin: 10px;
   padding: 10px;
   background-color: rgb(233, 233, 233);
-  width: 300px;
+  width: 400px;
 }
 
 .imagenDeportista {
@@ -66,6 +76,8 @@ a{
   }
 
   .boton {
+    display: flex;
+    align-content: center;
     height: 36px;
     margin-bottom: 10px;
   }
