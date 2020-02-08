@@ -13,16 +13,16 @@ def login(request):
 
 
 def deportes_list(request):
-    list = Deportista.objects.all()
-    paginator = Paginator(list, 12)
+    deportesPrueba = Deportista.objects.select_related('idModalidadDeporte__idDeporte')
+    paginator = Paginator(deportesPrueba, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     if page_number is None:
         page_number = 1
     context = {
+        'deportes'
         'page': page_number,
         'deportistas': page_obj,
-        'deportes': ['Atletismo', 'Natacion', 'Futbol']
     }
     print(context)
     return render(request, 'deportistas/deportistas_list.html', context)
