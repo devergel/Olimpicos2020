@@ -20,7 +20,12 @@ a{
 }
 
 .boton:hover{
-  background-color: red;
+  transform: scale(1.1);
+  background-color: #c0bfbf;
+}
+
+.boton a{
+    margin-top: 5px;
 }
 
 .contenedorNav {

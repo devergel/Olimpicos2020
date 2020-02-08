@@ -22,4 +22,7 @@ urlpatterns = [
     path('register/', views.register),
     path('login/', views.login),
     path('', views.deportes_list),
+    path('', views.deportes_list),
+    path('deportistas/', views.deportes_list),
+
 ]

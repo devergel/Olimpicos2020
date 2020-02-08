@@ -13,14 +13,13 @@ def login(request):
 
 
 def deportes_list(request):
-    deportesPrueba = Deportista.objects.select_related('idModalidadDeporte__idDeporte')
-    paginator = Paginator(deportesPrueba, 12)
+    deportistas = Deportista.objects.select_related('idModalidadDeporte__idDeporte')
+    paginator = Paginator(deportistas, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     if page_number is None:
         page_number = 1
     context = {
-        'deportes'
         'page': page_number,
         'deportistas': page_obj,
     }
