@@ -11,16 +11,17 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script>
         function sendForm() {
             if ($('#password').val() != $('#repeat_password').val()) {
                 alert('Las contraseñas no son iguales');
                 return false;
             }
-            //"http://127.0.0.1:8000/addUser/" "http://127.0.0.1:8000/login/"
+
             $.ajax({
                 type: "POST",
-                url: "https://colombia-tokio-grupo4.herokuapp.com/addUser/",
+                url: window.location.origin +"/addUser/",
                 data: JSON.stringify({
                     'username': $('#username').val(), 'first_name': $('#name').val(),
                     'last_name': $('#last_name').val(), 'password': $('#password').val(), 'email': $('#email').val()
@@ -29,7 +30,7 @@
                 dataType: "json",
                 success: function (data) {
                     alert("Usuario registrado: " + $('#username').val());
-                    window.location = "https://colombia-tokio-grupo4.herokuapp.com/login/";
+                    window.location = window.location.origin +"/login/";
                 },
                 failure: function (errMsg) {
                     alert("Se presentó un error al adicionar el usuario");
@@ -46,7 +47,6 @@
 <body>
     <article class="card-body mx-auto h-100 d-flex flex-column justify-content-center">
         <form class="shadow p-3 mb-5 bg-dark rounded" action="" method="POST" onsubmit="return sendForm();">
-            {% csrf_token %}
             <div class="form-group text-white">
                 <p class="text-center title"> <strong>REGISTRO</strong> </p>
             </div>
