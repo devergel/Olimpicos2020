@@ -46,6 +46,7 @@
 <body>
     <article class="card-body mx-auto h-100 d-flex flex-column justify-content-center">
         <form class="shadow p-3 mb-5 bg-dark rounded" action="" method="POST" onsubmit="return sendForm();">
+            {% csrf_token %}
             <div class="form-group text-white">
                 <p class="text-center title"> <strong>REGISTRO</strong> </p>
             </div>
