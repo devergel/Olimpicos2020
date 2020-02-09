@@ -23,7 +23,6 @@ class Evento(models.Model):
         return 'Id Evento: ' + str(self.idEvento) + ' --Mes-- ' + str(self.fecha.month)
 
 
-
 class LugarNacimiento(models.Model):
     idLugarNacimiento = models.AutoField(primary_key=True)
     ciudad = models.CharField(max_length=100)
@@ -54,6 +53,7 @@ class Entrenador(models.Model):
 class Deporte(models.Model):
     idDeporte = models.AutoField(primary_key=True)
     nombreDeporte = models.CharField(max_length=100)
+    icono = models.ImageField(upload_to='model/static/images', null=True)
 
     def __str__(self):
         return 'Deporte: ' + str(self.nombreDeporte)
@@ -63,8 +63,8 @@ class ModadalidadDeporte(models.Model):
     idModalidadDeporte = models.AutoField(primary_key=True)
     nombreModalidad = models.CharField(max_length=100)
     # id del deporte al que pertenece la modalidad
-    idDeporte = models.ForeignKey(Deporte , on_delete=models.CASCADE, blank=True, null=True)
-
+    idDeporte = models.ForeignKey(
+        Deporte, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return 'ModalidadDeporte: ' + str(self.nombreModalidad)
@@ -72,10 +72,14 @@ class ModadalidadDeporte(models.Model):
 
 class Deportista(models.Model):
     idDeportista = models.AutoField(primary_key=True)
-    idEntrenador = models.ForeignKey( Entrenador, on_delete=models.CASCADE,  blank=True, null=True)
-    idDelegacion = models.ForeignKey( Delegacion, on_delete=models.CASCADE,  blank=True, null=True)
-    idLugarNacimiento = models.ForeignKey(LugarNacimiento, on_delete=models.CASCADE,  blank=True, null=True)
-    idModalidadDeporte = models.ForeignKey(ModadalidadDeporte, on_delete=models.CASCADE, blank=True, null=True)
+    idEntrenador = models.ForeignKey(
+        Entrenador, on_delete=models.CASCADE,  blank=True, null=True)
+    idDelegacion = models.ForeignKey(
+        Delegacion, on_delete=models.CASCADE,  blank=True, null=True)
+    idLugarNacimiento = models.ForeignKey(
+        LugarNacimiento, on_delete=models.CASCADE,  blank=True, null=True)
+    idModalidadDeporte = models.ForeignKey(
+        ModadalidadDeporte, on_delete=models.CASCADE, blank=True, null=True)
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     edad = models.IntegerField()
@@ -92,26 +96,29 @@ class Participacion(models.Model):
     idParticipacion = models.AutoField(primary_key=True)
     usuarios = models.ManyToManyField(Usuario, through='Comentario')
     # id evento apunta a tabla Evento
-    evento = models.ForeignKey(Evento, on_delete=models.CASCADE,  blank=True, null=True)
+    evento = models.ForeignKey(
+        Evento, on_delete=models.CASCADE,  blank=True, null=True)
     # id deportista apunta a tabla deportista
     deportista = models.ForeignKey(
-    Deportista, on_delete=models.CASCADE, default='')
+        Deportista, on_delete=models.CASCADE, default='')
     # id modalidadDeporte tabla modalidadDeporte
-    modalidadDeporte = models.ForeignKey( ModadalidadDeporte, on_delete=models.CASCADE,  blank=True, null=True)
+    modalidadDeporte = models.ForeignKey(
+        ModadalidadDeporte, on_delete=models.CASCADE,  blank=True, null=True)
     linkVideo = models.CharField(max_length=300)
 
     def __str__(self):
         return 'Id Participacion: ' + str(self.idParticipacion)
 
 
-
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key=True)
     texto = models.CharField(max_length=300)
     # id usuario apunta a tabla Usuario
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE,  blank=True, null=True)
+    usuario = models.ForeignKey(
+        Usuario, on_delete=models.CASCADE,  blank=True, null=True)
     # id participacion apunta a tabla participacion
-    participacion = models.ForeignKey(Participacion, on_delete=models.CASCADE,  blank=True, null=True)
+    participacion = models.ForeignKey(
+        Participacion, on_delete=models.CASCADE,  blank=True, null=True)
     fecha = models.DateField(blank=True, auto_now=True)
 
     def __str__(self):
