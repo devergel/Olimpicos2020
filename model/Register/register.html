@@ -20,7 +20,7 @@
             //"http://127.0.0.1:8000/addUser/" "http://127.0.0.1:8000/login/"
             $.ajax({
                 type: "POST",
-                url: "http://colombia-tokio-grupo4.herokuapp.com/addUser/",
+                url: "https://colombia-tokio-grupo4.herokuapp.com/addUser/",
                 data: JSON.stringify({
                     'username': $('#username').val(), 'first_name': $('#name').val(),
                     'last_name': $('#last_name').val(), 'password': $('#password').val(), 'email': $('#email').val()
@@ -29,7 +29,7 @@
                 dataType: "json",
                 success: function (data) {
                     alert("Usuario registrado: " + $('#username').val());
-                    window.location = "http://colombia-tokio-grupo4.herokuapp.com/login/";
+                    window.location = "https://colombia-tokio-grupo4.herokuapp.com/login/";
                 },
                 failure: function (errMsg) {
                     alert("Se presentó un error al adicionar el usuario");
