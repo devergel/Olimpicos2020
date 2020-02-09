@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import Usuario
 from .models import Comentario
 from .models import Participacion
 from .models import Evento
@@ -11,7 +10,6 @@ from .models import Delegacion
 from .models import Entrenador
 
 # Register your models here.
-admin.site.register(Usuario)
 admin.site.register(Comentario)
 admin.site.register(Participacion)
 admin.site.register(Evento)

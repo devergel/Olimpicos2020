@@ -1,5 +1,9 @@
 {% load static %}
 <html>
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+        <title>Juegos Olimpicos 2020 - Loging</title>
 
 <head>
     <meta charset='utf-8'>
@@ -10,22 +14,19 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-
-</head>
-
-<body>
-    <article class="card-body mx-auto h-100 d-flex flex-column justify-content-center">
-        <form class="shadow p-4 mb-5 bg-dark rounded" action="" method="POST" onsubmit="return sendForm();">
-            <div class="form-group text-white">
-                <p class="text-center title"> <strong>LOGIN</strong> </p>
-            </div>
-            <div class="form-group input-group">
-                <div class="input-group-prepend">
-                    <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+    </head>
+    <body>
+        <article class="card-body mx-auto h-100 d-flex flex-column justify-content-center">
+            <form class="shadow p-4 mb-5 bg-dark rounded" action="" method="post" onsubmit="return sendForm();">
+                <div class="form-group text-white">
+                    <p class="text-center title" > <strong>LOGIN</strong> </p>
                 </div>
-                <input class="form-control" placeholder="Usuario" type="text" id="user">
-            </div>
+                <div class="form-group input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"> <i class="fa fa-user"></i> </span>
+                    </div>
+                    <input class="form-control" placeholder="Usuario" type="text" id="username">
+                </div>    
 
             <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -34,14 +35,40 @@
                 <input class="form-control" placeholder="Contraseña" type="password" id="password">
             </div>
 
-            <div class="form-group  d-flex flex-row justify-content-center">
-                <button type="submit" class="btn btn-white mt-2 px-5"> Ingresar </button>
-            </div>
-            <div class="form-group">
-                <p class="text-center"> <a class="text-white" href="">Olvido su contraseña?</a> </p>
-            </div>
-        </form>
-    </article>
-</body>
-
+                <div class="form-group  d-flex flex-row justify-content-center">
+                    <button id="send" type="submit" value="login" class="btn btn-white mt-2 px-5"> Ingresar  </button>
+                </div>     
+                <div class="form-group">
+                    <p class="text-center"> <a class= "text-white" href="">Olvido su contraseña?</a> </p>  
+                </div>                                                                     
+            </form>
+        </article>
+    </body>
 </html>
+
+<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+         function sendForm() {
+            $.ajax({
+                type: "POST",
+                url: window.location.origin +"/loginUser/",
+                data: JSON.stringify({username: $('#username').val() , password: $('#password').val() }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function(data) {
+                    if(data.message == "ok")
+                    {
+                       window.location = window.location.origin;
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
+                },
+                failure: function(errMsg) {
+                    alert("Se presentó un error al intentar el login");
+                }
+            });
+            return false;
+        }
+</script>

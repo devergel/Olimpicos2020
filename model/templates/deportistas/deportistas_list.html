@@ -16,6 +16,18 @@
   <div class="container-fluid contenedorNav">
     <div class="row">
       <h1 class="col-0 col-sm-0 col-md-8 col-lg-8">Colombia en Tokio 2020</h1>
+      {% if request.user.is_authenticated %}
+      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+        Bienvenido <b>{{request.user.username}}</b>
+      </div>
+      <div class="col-6 col-sm-6 col-md-2 col-lg-2">
+        <a href="/logout">
+          <div class="boton">
+            <p>Logout</p>
+          </div>
+        </a>
+      </div>
+      {% else %}
       <div class="col-6 col-sm-6 col-md-2 col-lg-2">
         <a href="/register">
           <div class="boton">
@@ -30,6 +42,7 @@
           </div>
         </a>
       </div>
+      {% endif %}
     </div>
   </div>
   <div class="container centrar">
