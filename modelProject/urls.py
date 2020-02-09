@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^loginUser/$', views.login_view, name='loginUser'),
     path('', views.deportes_list),
     path('deportistas/', views.deportes_list),
-    #path('logout', views.logout),
+    path('logout', views.logout),
     url('addUser/$', views.add_user_view, name='addUser'),
 ]

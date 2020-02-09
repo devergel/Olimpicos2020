@@ -6,8 +6,8 @@ from django.http import HttpResponse
 from django.contrib.auth import login as do_login
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
-
-from django.shortcuts import render
+from django.contrib.auth import logout as do_logout
+from django.shortcuts import render, redirect
 
 from .models import Deportista
 from django.core.paginator import Paginator
@@ -76,3 +76,9 @@ def login_view(request):
 
 def login_user(request):
     return render(request, "deportistas/deportistas_list.html")
+
+def logout(request):
+    # Finalizamos la sesión
+    do_logout(request)
+    # Redireccionamos a la portada
+    return redirect('/')
