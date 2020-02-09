@@ -3,11 +3,17 @@ import json
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponse
+from django.contrib.auth import login as do_login
+from django.contrib.auth import authenticate
+from django.http import JsonResponse
+
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
 
 from .models import Deportista
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+
+
 # Create your views here.
 
 
@@ -51,3 +57,22 @@ def add_user_view(request):
         user_model.save()
     return HttpResponse(serializers.serialize("json", [user_model]))
 
+
+@csrf_exempt
+def login_view(request):
+    if request.method == 'POST':
+        jsonUser = json.loads(request.body)
+        username = jsonUser['username']
+        password = jsonUser['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            do_login(request, user)
+            message = "ok"
+        else:
+            message = 'Nombre de usuario o contraseña incorrectos'
+
+    return JsonResponse({"message": message})
+
+
+def login_user(request):
+    return render(request, "deportistas/deportistas_list.html")

@@ -1,18 +1,8 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
 # Create your models here.
-class Usuario(models.Model):
-    idUsuario = models.AutoField(primary_key=True)
-    usuario = models.CharField(max_length=200)
-    contrasena = models.CharField(max_length=200)
-    nombre = models.CharField(max_length=200)
-    Apellido = models.CharField(max_length=200)
-    correo = models.CharField(max_length=1000)
-
-    def __str__(self):
-        return 'Usuario: ' + str(self.idUsuario)
-
 
 class Evento(models.Model):
     idEvento = models.AutoField(primary_key=True)
@@ -90,7 +80,7 @@ class Deportista(models.Model):
 
 class Participacion(models.Model):
     idParticipacion = models.AutoField(primary_key=True)
-    usuarios = models.ManyToManyField(Usuario, through='Comentario')
+    #usuarios = models.ManyToManyField(Usuario, through='Comentario')
     # id evento apunta a tabla Evento
     evento = models.ForeignKey(Evento, on_delete=models.CASCADE,  blank=True, null=True)
     # id deportista apunta a tabla deportista
@@ -108,8 +98,8 @@ class Participacion(models.Model):
 class Comentario(models.Model):
     idComentario = models.AutoField(primary_key=True)
     texto = models.CharField(max_length=300)
-    # id usuario apunta a tabla Usuario
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE,  blank=True, null=True)
+    # id usuario apunta a tabla Usuario de Django
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE,  blank=True, null=True)
     # id participacion apunta a tabla participacion
     participacion = models.ForeignKey(Participacion, on_delete=models.CASCADE,  blank=True, null=True)
     fecha = models.DateField(blank=True, auto_now=True)
