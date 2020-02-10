@@ -75,7 +75,7 @@ class Deportista(models.Model):
     edad = models.IntegerField()
     peso = models.DecimalField(max_digits=6, decimal_places=2)
     estatura = models.DecimalField(max_digits=6, decimal_places=2)
-    foto = models.CharField(max_length=250)
+    foto = models.ImageField(upload_to='model/static/images', null=True)
     fechaNacimiento = models.DateField(blank=True, auto_now=True)
 
     def __str__(self):
