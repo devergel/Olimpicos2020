@@ -8,13 +8,15 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.contrib.auth import logout as do_logout
 from django.shortcuts import render, redirect
+from rest_framework import viewsets
+from rest_framework.response import Response
 
 from .models import Deportista
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
-
 # Create your views here.
+from .serializers import DeportistaSerializer
 
 
 def register(request):
@@ -59,6 +61,27 @@ def add_user_view(request):
 
 
 @csrf_exempt
+def get_sportsman_info(request):
+    if request.method == 'GET':
+        idDeportista = 10;
+        print(idDeportista)
+        #queryset = Deportista.objects.filter(idDeportista=idDeportista)
+        queryset = Deportista.objects.select_related('idLugarNacimiento').filter(idDeportista=idDeportista)
+        print(queryset)
+        #serializer_class = DeportistaSerializer(queryset, many=True)
+        data=serializers.serialize('json', queryset)
+        #dump = json.dumps(queryset)
+        return HttpResponse(data, content_type='application/json')
+
+
+class StudentViewSet(viewsets.ModelViewSet):
+    idDeportista = 10
+    print(idDeportista)
+    queryset = Deportista.objects.filter(idDeportista=idDeportista)
+    serializer_class = DeportistaSerializer
+
+
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         jsonUser = json.loads(request.body)
@@ -76,6 +99,7 @@ def login_view(request):
 
 def login_user(request):
     return render(request, "deportistas/deportistas_list.html")
+
 
 def logout(request):
     # Finalizamos la sesión
