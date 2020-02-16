@@ -40,15 +40,17 @@
 </body>
 <script>
   fetch("/infoSportman?id={{id}}").then(response => {
-    console.log(response);
-    document.getElementById("imagenDeportista").src = "/static/images/nadador.jpg"
-    document.getElementById("iconoDeporte").src = "/static/images/Natacion.png"
-    document.getElementById("nombreDeportista").innerHTML = "Mateo Devia"
-    document.getElementById("fechaNacimiento").innerHTML = "20 ago 1998"
-    document.getElementById("edad").innerHTML = "edad: " + "21 años"
-    document.getElementById("peso").innerHTML = "peso: " + "65 kg"
-    document.getElementById("estatura").innerHTML = "estatura: " + "178 cm"
-    document.getElementById("entrenador").innerHTML = "entrenador: " + "Julian Perez"
+    response.json().then(data => {
+      deportista = data[0];
+      document.getElementById("imagenDeportista").src = deportista.foto;
+      document.getElementById("iconoDeporte").src = "/static/images/Natacion.png";
+      document.getElementById("nombreDeportista").innerHTML = deportista.nombre + " " + deportista.apellido;
+      document.getElementById("fechaNacimiento").innerHTML = deportista.fechanacimiento;
+      document.getElementById("edad").innerHTML = "edad: " + deportista.edad + " años";
+      document.getElementById("peso").innerHTML = "peso: " + deportista.peso + " kg";
+      document.getElementById("estatura").innerHTML = "estatura: " + deportista.estatura + " cm";
+      document.getElementById("entrenador").innerHTML = "entrenador: " + deportista.nombreentrenador + " " + deportista.apellidoentrenador;
+    })
   })
 </script>
 

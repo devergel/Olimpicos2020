@@ -71,6 +71,7 @@ def get_sportsman_info(request):
         queryset = Deportista.objects.select_related().filter(idDeportista=idDeportista)
         data = []
         for deportista in queryset:
+            print('HOLAAA', deportista.foto.url.strip('model'))
             data.append({
                 'idDeportista': deportista.idDeportista,
                 'nombre': deportista.nombre,
@@ -78,7 +79,7 @@ def get_sportsman_info(request):
                 'edad': deportista.edad,
                 'peso': str(deportista.peso),
                 'estatura': str(deportista.estatura),
-                'foto': deportista.foto,
+                'foto': deportista.foto.url.strip('model'),
                 'fechanacimiento': str(deportista.fechaNacimiento),
                 'ciudad': deportista.idLugarNacimiento.ciudad,
                 'pais': deportista.idLugarNacimiento.pais,
