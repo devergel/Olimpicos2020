@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{% static 'css/deportista.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
   <title>Colombia en Tokio 2020</title>
 </head>
 
@@ -39,6 +40,21 @@
   <div class="linea">
   </div>
   <h1>Participaciones</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Hora</th>
+      <th scope="col">Modalidad</th>
+      <th scope="col">Resultado</th>
+      <th scope="col">Video</th>
+    </tr>
+  </thead>
+  <tbody id="table_content">
+
+  </tbody>
+</table>
 </body>
 <script>
   fetch("/infoSportman?id={{id}}").then(response => {
@@ -54,6 +70,23 @@
       document.getElementById("entrenador").innerHTML = "entrenador: " + deportista.nombreentrenador + " " + deportista.apellidoentrenador;
     })
   })
+
+  fetch("/infoParticipation?id={{id}}").then(response => response.json()).then(participaciones=>{
+           let row ="";
+          participaciones.forEach(p=>row=row+
+          "<tr>" +
+          "<td>"+p.fecha+"</td>" +
+          "<td>05:00</td>" +
+          "<td>"+p.descripcion+"</td>" +
+          "<td>"+p.resultado+"</td>" +
+          "<td class=\"text-center\"><span><a href=\"/infovideo?link="+p.linkVideo+"\"><i class=\"fas fa-camera-retro\"></i></a> </span> </td>" +
+          "</tr>"
+          )
+          document.getElementById("table_content").innerHTML=row;
+  }
+
+
+  )
 </script>
 
 </html>
