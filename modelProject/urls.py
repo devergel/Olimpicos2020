@@ -13,20 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from model import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('register/', views.register),
-    path('login/', views.login),
-    url(r'^loginUser/$', views.login_view, name='loginUser'),
-    url(r'^infoSportman/$', views.get_sportsman_info),
-    url(r'^infoParticipation/$', views.get_info_participation),
-    path('', views.deportes_list),
-    path('deportista/<slug:id>/', views.deportista_detail),
-    path('logout', views.logout),
-    url('addUser/$', views.add_user_view, name='addUser'),
-]
+                  path('admin/', admin.site.urls),
+                  path('register/', views.register),
+                  path('login/', views.login),
+                  url(r'^loginUser/$', views.login_view, name='loginUser'),
+                  url(r'^infoSportman/$', views.get_sportsman_info),
+                  url(r'^infoParticipation/$', views.get_info_participation),
+                  path('', views.deportes_list),
+                  path('deportista/<slug:id>/', views.deportista_detail, name='deportista_detail'),
+                  path('logout', views.logout),
+                  url('addUser/$', views.add_user_view, name='addUser'),
+                  path('video_comment/', views.VideoCommentView.as_view(), name='video_comment'),
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -1,5 +1,6 @@
 import json
 
+from bootstrap_modal_forms.generic import BSModalCreateView
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.http import HttpResponse
@@ -8,7 +9,10 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.contrib.auth import logout as do_logout
 from django.shortcuts import render, redirect
-from .models import Deportista, Participacion
+from django.urls import reverse_lazy
+
+from .forms import VideoCommentForm
+from .models import Deportista, Participacion, Comentario
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -71,7 +75,6 @@ def get_sportsman_info(request):
         queryset = Deportista.objects.select_related().filter(idDeportista=idDeportista)
         data = []
         for deportista in queryset:
-
             data.append({
                 'idDeportista': deportista.idDeportista,
                 'nombre': deportista.nombre,
@@ -86,7 +89,7 @@ def get_sportsman_info(request):
                 'nombreentrenador': deportista.idEntrenador.nombre,
                 'apellidoentrenador': deportista.idEntrenador.apellido,
                 'nombredelegacion': deportista.idDelegacion.nombre,
-                'icono':deportista.idModalidadDeporte.idDeporte.icono.url.strip('model')
+                'icono': deportista.idModalidadDeporte.idDeporte.icono.url.strip('model')
             })
 
         dataJson = json.dumps(data)
@@ -138,4 +141,10 @@ def get_info_participation(request):
             })
 
         dataJson = json.dumps(data)
-        return HttpResponse(dataJson, content_type='application/json')
+
+
+class VideoCommentView(BSModalCreateView):
+    template_name = 'templates/deportistas/video_comment.html'
+    form_class = VideoCommentForm
+    success_message = 'Comentario creado Existosamente'
+    success_url = reverse_lazy('deportista_detail')

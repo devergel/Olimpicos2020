@@ -1,13 +1,13 @@
 {% load static %}
+  {% load bootstrap4 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/deportista.css' %}">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <title>Colombia en Tokio 2020</title>
 </head>
 
@@ -39,8 +39,29 @@
   <div class="linea">
   </div>
   <h1>Participaciones</h1>
+                  <input id="linkVideo" name="linkVideo" type="hidden" value="https://www.youtube.com/watch?v=x0CJKvevs2M">
+                  <button class="video-comment btn btn-primary" type="button" onclick="abrir_modal()" name="button">Video/Comentarios</button>
+
+        </div>
+    </div>
+{% bootstrap_javascript jquery='full' %}
 </body>
 <script>
+
+  function abrir_modal(url)
+    {
+            $('body').append(modalDiv);
+            $('#modal').load("{% url 'video_comment' %}", function()
+            {
+                    $(this).modal('show');
+            });
+            return false;
+    }
+    var modalDiv = '<div class="modal fade" tabindex="-1" role="dialog" id="modal"><div class="modal-dialog" role="document"><div class="modal-content"></div></div></div>';
+    function cerrar_modal()
+        {
+                $('#modal').modal('hide');
+        }
   fetch("/infoSportman?id={{id}}").then(response => {
     response.json().then(data => {
       deportista = data[0];
