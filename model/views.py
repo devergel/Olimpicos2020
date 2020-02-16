@@ -1,23 +1,16 @@
 import json
-import pprint
 
 from django.contrib.auth.models import User
 from django.core import serializers
-from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.contrib.auth import login as do_login
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.contrib.auth import logout as do_logout
 from django.shortcuts import render, redirect
-from rest_framework import viewsets
-from django.db import connection
 from .models import Deportista, Participacion
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-
-# Create your views here.
-from .serializers import DeportistaSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
