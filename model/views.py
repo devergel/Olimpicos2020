@@ -8,13 +8,9 @@ from django.contrib.auth import authenticate
 from django.http import JsonResponse
 from django.contrib.auth import logout as do_logout
 from django.shortcuts import render, redirect
-
-from .models import Deportista
+from .models import Deportista, Participacion
 from django.core.paginator import Paginator
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
-
-
-# Create your views here.
+from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
@@ -59,6 +55,34 @@ def add_user_view(request):
 
 
 @csrf_exempt
+def get_sportsman_info(request):
+    if request.method == 'GET':
+        idDeportista = request.GET.get('id');
+        queryset = Deportista.objects.select_related().filter(idDeportista=idDeportista)
+        data = []
+        for deportista in queryset:
+            data.append({
+                'idDeportista': deportista.idDeportista,
+                'nombre': deportista.nombre,
+                'apellido': deportista.apellido,
+                'edad': deportista.edad,
+                'peso': str(deportista.peso),
+                'estatura': str(deportista.estatura),
+                'foto': deportista.foto,
+                'fechanacimiento': str(deportista.fechaNacimiento),
+                'ciudad': deportista.idLugarNacimiento.ciudad,
+                'pais': deportista.idLugarNacimiento.pais,
+                'nombreentrenador': deportista.idEntrenador.nombre,
+                'apellidoentrenador': deportista.idEntrenador.apellido,
+                'nombredelegacion': deportista.idDelegacion.nombre
+            })
+
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
+
+
+
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         jsonUser = json.loads(request.body)
@@ -77,8 +101,30 @@ def login_view(request):
 def login_user(request):
     return render(request, "deportistas/deportistas_list.html")
 
+
 def logout(request):
     # Finalizamos la sesión
     do_logout(request)
     # Redireccionamos a la portada
     return redirect('/')
+
+
+@csrf_exempt
+def get_info_participation(request):
+    if request.method == 'GET':
+        idDeportista = request.GET.get('id');
+
+        queryset = Participacion.objects.select_related().filter(deportista_id=idDeportista)
+        data = []
+        for participacion in queryset:
+            data.append({
+                'idParticipacion': participacion.idParticipacion,
+                'linkVideo': participacion.linkVideo,
+                'deportista_id': participacion.deportista_id,
+                'descripcion': participacion.modalidadDeporte.nombreModalidad,
+                'fecha': str(participacion.evento.fecha),
+                'resultado': participacion.resultado
+            })
+
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
