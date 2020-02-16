@@ -25,8 +25,17 @@ def login(request):
     return render(request, 'Login/login.html', {})
 
 
+def deportista_detail(request, id):
+    print(id)
+    context = {
+        'id': id
+    }
+    return render(request, 'deportistas/deportista_detail.html', context)
+
+
 def deportes_list(request):
-    deportistas = Deportista.objects.select_related('idModalidadDeporte__idDeporte')
+    deportistas = Deportista.objects.select_related(
+        'idModalidadDeporte__idDeporte')
     paginator = Paginator(deportistas, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -50,7 +59,8 @@ def add_user_view(request):
         password = jsonUser['password']
         email = jsonUser['email']
 
-        user_model = User.objects.create_user(username=username, password=password)
+        user_model = User.objects.create_user(
+            username=username, password=password)
         user_model.first_name = first_name
         user_model.last_name = last_name
         user_model.email = email
@@ -76,6 +86,7 @@ def login_view(request):
 
 def login_user(request):
     return render(request, "deportistas/deportistas_list.html")
+
 
 def logout(request):
     # Finalizamos la sesión
