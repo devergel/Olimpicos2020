@@ -14,7 +14,9 @@
 <body>
   <div class="container-fluid contenedorNav">
     <div class="row">
-      <h1 class="titulo col-0 col-sm-0 col-md-8 col-lg-8">Colombia en Tokio 2020</h1>
+      <a href="/" style="width:100vw;">
+        <h1 class="titulo col-0 col-sm-0 col-md-8 col-lg-8">Colombia en Tokio 2020</h1>
+      </a>
     </div>
   </div>
   <div class="container-fluid">
@@ -43,7 +45,7 @@
     response.json().then(data => {
       deportista = data[0];
       document.getElementById("imagenDeportista").src = deportista.foto;
-      document.getElementById("iconoDeporte").src = "/static/images/Natacion.png";
+      document.getElementById("iconoDeporte").src = deportista.icono;
       document.getElementById("nombreDeportista").innerHTML = deportista.nombre + " " + deportista.apellido;
       document.getElementById("fechaNacimiento").innerHTML = deportista.fechanacimiento;
       document.getElementById("edad").innerHTML = "edad: " + deportista.edad + " años";
