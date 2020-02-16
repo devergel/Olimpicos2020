@@ -20,9 +20,9 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-5 centrar">
-        <img id="imagenDeportista" src="/static/images/nadador.jpg" />
+        <img id="imagenDeportista" src="" />
         <br>
-        <img id="iconoDeporte" src="/static/images/Natacion.png">
+        <img id="iconoDeporte" src="">
       </div>
       <div class="col-7 centrar">
         <h1 id="nombreDeportista"></h1>
@@ -41,6 +41,8 @@
 <script>
   fetch("/infoSportman?id={{id}}").then(response => {
     console.log(response);
+    document.getElementById("imagenDeportista").src = "/static/images/nadador.jpg"
+    document.getElementById("iconoDeporte").src = "/static/images/Natacion.png"
     document.getElementById("nombreDeportista").innerHTML = "Mateo Devia"
     document.getElementById("fechaNacimiento").innerHTML = "20 ago 1998"
     document.getElementById("edad").innerHTML = "edad: " + "21 años"

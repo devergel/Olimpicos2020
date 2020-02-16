@@ -53,7 +53,9 @@
         <div class="col-12 col-sm-12 col-md-12 col-lg-12">
           <div class="row">
             <img class="imagenDeportista" src='/{{ deportista.foto|cut:"model/" }}' alt="" />
-            <h4 class="nombreDeportista">{{deportista.nombre}} {{deportista.apellido}} </h4>
+            <h4 class="nombreDeportista">
+              <a href="/deportista/{{deportista.idDeportista}}">{{deportista.nombre}} {{deportista.apellido}}</a>
+            </h4>
 
           </div>
           <div class="row centrar d-flex justify-content-center">
