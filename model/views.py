@@ -114,3 +114,24 @@ def logout(request):
     do_logout(request)
     # Redireccionamos a la portada
     return redirect('/')
+
+
+@csrf_exempt
+def get_info_participation(request):
+    if request.method == 'GET':
+        idDeportista = request.GET.get('id');
+
+        queryset = Participacion.objects.select_related().filter(deportista_id=idDeportista)
+        data = []
+        for participacion in queryset:
+            data.append({
+                'idParticipacion': participacion.idParticipacion,
+                'linkVideo': participacion.linkVideo,
+                'deportista_id': participacion.deportista_id,
+                'descripcion': participacion.modalidadDeporte.nombreModalidad,
+                'fecha': str(participacion.evento.fecha),
+                'resultado': participacion.resultado
+            })
+
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
