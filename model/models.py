@@ -95,6 +95,7 @@ class Participacion(models.Model):
     modalidadDeporte = models.ForeignKey(
         ModadalidadDeporte, on_delete=models.CASCADE,  blank=True, null=True)
     linkVideo = models.CharField(max_length=300)
+    resultado = models.CharField(max_length=300, null=True)
 
     def __str__(self):
         return 'Id Participacion: ' + str(self.idParticipacion)

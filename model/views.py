@@ -12,7 +12,7 @@ from django.contrib.auth import logout as do_logout
 from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from django.db import connection
-from .models import Deportista
+from .models import Deportista, Participacion
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
@@ -65,25 +65,28 @@ def add_user_view(request):
 def get_sportsman_info(request):
     if request.method == 'GET':
         idDeportista = request.GET.get('id');
-        print(idDeportista)
-        # queryset = Deportista.objects.filter(idDeportista=idDeportista)
-        # queryset = Deportista.objects.select_related('idLugarNacimiento').filter(idDeportista=idDeportista)
-        data = my_custom_sql(idDeportista)
+        queryset = Deportista.objects.select_related().filter(idDeportista=idDeportista)
+        data = []
+        for deportista in queryset:
+            data.append({
+                'idDeportista': deportista.idDeportista,
+                'nombre': deportista.nombre,
+                'apellido': deportista.apellido,
+                'edad': deportista.edad,
+                'peso': str(deportista.peso),
+                'estatura': str(deportista.estatura),
+                'foto': deportista.foto,
+                'fechanacimiento': str(deportista.fechaNacimiento),
+                'ciudad': deportista.idLugarNacimiento.ciudad,
+                'pais': deportista.idLugarNacimiento.pais,
+                'nombreentrenador': deportista.idEntrenador.nombre,
+                'apellidoentrenador': deportista.idEntrenador.apellido,
+                'nombredelegacion': deportista.idDelegacion.nombre
+            })
 
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
 
-        #data=json.dumps(queryset, cls=DjangoJSONEncoder)
-        data= json.dumps(data)
-        # serializer_class = DeportistaSerializer(queryset, many=True)
-        #data = serializers.serialize('json', queryset)
-        # dump = json.dumps(queryset)
-        return HttpResponse(data, content_type='application/json')
-
-
-class StudentViewSet(viewsets.ModelViewSet):
-    idDeportista = 10
-    print(idDeportista)
-    queryset = Deportista.objects.filter(idDeportista=idDeportista)
-    serializer_class = DeportistaSerializer
 
 
 @csrf_exempt
@@ -111,26 +114,3 @@ def logout(request):
     do_logout(request)
     # Redireccionamos a la portada
     return redirect('/')
-
-
-def my_custom_sql(id):
-
-    with connection.cursor() as cursor:
-        sql = 'select "idDeportista",model_deportista.nombre,model_deportista.apellido,edad,' \
-              'TO_CHAR(peso,\'99,9\') AS peso,TO_CHAR(estatura,\'99,9\') as estatura, ' \
-              'foto, TO_CHAR("fechaNacimiento",\'YYYY-MM-DD\') as fechanacimiento, ' \
-              'ciudad, pais, model_entrenador.nombre as nombreEntrenador, ' \
-              'model_entrenador.apellido as apellidoEntrenador, model_delegacion.nombre as nombreDelegacion from ' \
-              'public.model_deportista,  public.model_lugarnacimiento,public.model_entrenador, ' \
-              'public.model_delegacion, public.model_modadalidaddeporte ' \
-              'where "idLugarNacimiento_id"="idLugarNacimiento" AND "idEntrenador_id" = "idEntrenador" ' \
-              'AND "idDelegacion_id" = "idDelegacion" AND "idModalidadDeporte_id" = "idModalidadDeporte" ' \
-              'AND "idDeportista"=10'
-
-        cursor.execute(sql)
-        columns = cursor.description
-        result = [{columns[index][0]: column for index, column in enumerate(value)} for value in cursor.fetchall()]
-
-        pprint.pprint(result)
-
-        return result
