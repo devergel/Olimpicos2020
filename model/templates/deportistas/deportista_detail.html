@@ -54,8 +54,6 @@
 
   </tbody>
 </table>
-  <input id="linkVideo" name="linkVideo" type="hidden" value="https://www.youtube.com/watch?v=x0CJKvevs2M">
-  <button class="video-comment btn btn-primary" type="button" onclick="abrir_modal()" name="button">Video/Comentarios</button>
         </div>
     </div>
 {% bootstrap_javascript jquery='full' %}
@@ -99,7 +97,7 @@
           "<td>05:00</td>" +
           "<td>"+p.descripcion+"</td>" +
           "<td>"+p.resultado+"</td>" +
-          "<td class=\"text-center\"><span><a href=\"/infovideo?link="+p.linkVideo+"\"><i class=\"fas fa-camera-retro\"></i></a> </span> </td>" +
+          "<td class=\"text-center\"><input id=\"linkVideo\" name=\"linkVideo\" type=\"hidden\" value=\""+p.linkVideo+"\"><span><a onclick=\"abrir_modal()\"><i class=\"fas fa-camera-retro\"></i></a> </span> </td>" +
           "</tr>"
           )
           document.getElementById("table_content").innerHTML=row;

@@ -141,6 +141,7 @@ def get_info_participation(request):
             })
 
         dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
 
 
 class VideoCommentView(BSModalCreateView):
