@@ -4,12 +4,11 @@
     {% bootstrap_javascript %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{% static 'css/deportista.css' %}">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
   <title>Colombia en Tokio 2020</title>
 </head>
 
@@ -41,8 +40,7 @@
   <div class="linea">
   </div>
   <h1>Participaciones</h1>
-
-<table class="table table-striped">
+  <table class="table table-striped">
   <thead>
     <tr>
       <th scope="col">Fecha</th>
@@ -56,9 +54,8 @@
 
   </tbody>
 </table>
-                  <input id="linkVideo" name="linkVideo" type="hidden" value="https://www.youtube.com/watch?v=x0CJKvevs2M">
-                  <button class="video-comment btn btn-primary" type="button" onclick="abrir_modal()" name="button">Video/Comentarios</button>
-
+  <input id="linkVideo" name="linkVideo" type="hidden" value="https://www.youtube.com/watch?v=x0CJKvevs2M">
+  <button class="video-comment btn btn-primary" type="button" onclick="abrir_modal()" name="button">Video/Comentarios</button>
         </div>
     </div>
 {% bootstrap_javascript jquery='full' %}
@@ -79,6 +76,7 @@
         {
                 $('#modal').modal('hide');
         }
+
   fetch("/infoSportman?id={{id}}").then(response => {
     response.json().then(data => {
       deportista = data[0];
@@ -105,10 +103,7 @@
           "</tr>"
           )
           document.getElementById("table_content").innerHTML=row;
-  }
-
-
-  )
+  })
 </script>
 
 </html>
