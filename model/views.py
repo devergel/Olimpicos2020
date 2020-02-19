@@ -149,3 +149,27 @@ class VideoCommentView(BSModalCreateView):
     form_class = VideoCommentForm
     success_message = 'Comentario creado Existosamente'
     success_url = reverse_lazy('deportista_detail')
+
+
+@csrf_exempt
+def add_comment(request):
+    response = "Invalid Request"
+    if request.method == 'POST' and request.user.is_authenticated:
+        user = User.objects.get(username=request.user.username)
+        #user = User.objects.get(username="adminDev")
+        print(type(user))
+        jsonUser = json.loads(request.body)
+        texto = jsonUser['texto']
+        participacion = jsonUser['participacion']
+        comment_model = Comentario()
+        comment_model.texto = texto
+        comment_model.usuario = user
+        comment_model.participacion = Participacion.objects.get(
+            idParticipacion=participacion)
+        comment_model.save()
+        response = "ok"
+
+    if not request.user.is_authenticated:
+        response = "Permision Denied"
+
+    return JsonResponse({"message": response})

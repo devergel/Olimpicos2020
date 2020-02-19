@@ -21,15 +21,17 @@ from django.urls import path
 from model import views
 
 urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('register/', views.register),
-                  path('login/', views.login),
-                  url(r'^loginUser/$', views.login_view, name='loginUser'),
-                  url(r'^infoSportman/$', views.get_sportsman_info),
-                  url(r'^infoParticipation/$', views.get_info_participation),
-                  path('', views.deportes_list),
-                  path('deportista/<slug:id>/', views.deportista_detail, name='deportista_detail'),
-                  path('logout', views.logout),
-                  url('addUser/$', views.add_user_view, name='addUser'),
-                  path('video_comment/', views.VideoCommentView.as_view(), name='video_comment'),
-              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    path('admin/', admin.site.urls),
+    path('register/', views.register),
+    path('login/', views.login),
+    url(r'^loginUser/$', views.login_view, name='loginUser'),
+    url(r'^infoSportman/$', views.get_sportsman_info),
+    url(r'^infoParticipation/$', views.get_info_participation),
+    path('', views.deportes_list),
+    path('deportista/<slug:id>/', views.deportista_detail,
+         name='deportista_detail'),
+    path('logout', views.logout),
+    url('addUser/$', views.add_user_view, name='addUser'),
+    path('video_comment/', views.VideoCommentView.as_view(), name='video_comment'),
+    url('addComment/', views.add_comment, name='addComment'),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
