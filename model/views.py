@@ -190,7 +190,9 @@ def deportistas_list_service(request):
                 'idDeportista': deportista.idDeportista,
                 'nombre': deportista.nombre,
                 'apellido': deportista.apellido,
-                'icono': deportista.idModalidadDeporte.idDeporte.icono.url.strip('model')
+                'icono': deportista.idModalidadDeporte.idDeporte.icono.url.strip('model'),
+                'modalidadDeporte': deportista.idModalidadDeporte.nombreModalidad,
+                'deporte': deportista.idModalidadDeporte.idDeporte.nombreDeporte
 
             })
 
