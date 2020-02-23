@@ -191,6 +191,7 @@ def deportistas_list_service(request):
                 'nombre': deportista.nombre,
                 'apellido': deportista.apellido,
                 'icono': deportista.idModalidadDeporte.idDeporte.icono.url.strip('model'),
+                'foto': deportista.foto.url.strip('model'),
                 'modalidadDeporte': deportista.idModalidadDeporte.nombreModalidad,
                 'deporte': deportista.idModalidadDeporte.idDeporte.nombreDeporte
 
