@@ -12,7 +12,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
 from .forms import VideoCommentForm
-from .models import Deportista, Participacion, Comentario
+from .models import Deportista, Participacion, Comentario, Deporte, ModadalidadDeporte
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 
@@ -156,20 +156,76 @@ def add_comment(request):
     response = "Invalid Request"
     if request.method == 'POST' and request.user.is_authenticated:
         user = User.objects.get(username=request.user.username)
-        #user = User.objects.get(username="adminDev")
-        print(type(user))
-        jsonUser = json.loads(request.body)
-        texto = jsonUser['texto']
-        participacion = jsonUser['participacion']
-        comment_model = Comentario()
-        comment_model.texto = texto
-        comment_model.usuario = user
-        comment_model.participacion = Participacion.objects.get(
-            idParticipacion=participacion)
-        comment_model.save()
-        response = "ok"
+
+        response = save_comment(request, response, user)
 
     if not request.user.is_authenticated:
         response = "Permision Denied"
 
     return JsonResponse({"message": response})
+
+
+def save_comment(request, response, user):
+    print(type(user))
+    jsonUser = json.loads(request.body)
+    texto = jsonUser['texto']
+    participacion = jsonUser['participacion']
+    comment_model = Comentario()
+    comment_model.texto = texto
+    comment_model.usuario = user
+    comment_model.participacion = Participacion.objects.get(
+        idParticipacion=participacion)
+    comment_model.save()
+    response = "ok"
+    return response
+
+
+def deportistas_list_service(request):
+    if request.method == 'GET':
+        deportistas = Deportista.objects.select_related(
+            'idModalidadDeporte__idDeporte')
+        data = []
+        for deportista in deportistas:
+            data.append({
+                'idDeportista': deportista.idDeportista,
+                'nombre': deportista.nombre,
+                'apellido': deportista.apellido,
+                'icono': deportista.idModalidadDeporte.idDeporte.icono.url.strip('model')
+
+            })
+
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
+
+
+def sport_service(request):
+    if request.method == 'GET':
+        deportes = Deporte.objects.select_related()
+        data = []
+        for deporte in deportes:
+            data.append({
+                'idDeporte': deporte.idDeporte,
+                'nombreDeporte': deporte.nombreDeporte
+
+            })
+
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
+
+
+def mode_service(request):
+    if request.method == 'GET':
+        idDeporte = request.GET.get('idDeporte')
+        modalidades = ModadalidadDeporte.objects.select_related().filter(idDeporte=idDeporte)
+        data = []
+        for modalidad in modalidades:
+            data.append({
+                'idModalidadDeporte': modalidad.idModalidadDeporte,
+                'nombreModalidad': modalidad.nombreModalidad,
+                'idDeporte': modalidad.idDeporte.idDeporte,
+                'nombreDeporte': modalidad.idDeporte.nombreDeporte
+
+            })
+        print(data)
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
