@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^allInfo/$', views.deportistas_list_service),
     url(r'^allSport/$', views.sport_service),
     url(r'^allMode/$', views.mode_service),
+    url(r'^comment/$', views.comment_service),
     url(r'^infoParticipation/$', views.get_info_participation),
     path('', views.deportes_list),
     path('deportista/<slug:id>/', views.deportista_detail,

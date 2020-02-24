@@ -232,3 +232,19 @@ def mode_service(request):
         print(data)
         dataJson = json.dumps(data)
         return HttpResponse(dataJson, content_type='application/json')
+
+
+def comment_service(request):
+    if request.method == 'GET':
+        idParticipacion = request.GET.get('id')
+        comentarios = Comentario.objects.select_related().filter(participacion_id=idParticipacion)
+        data = []
+        for comentario in comentarios:
+            data.append({
+                'id': idParticipacion,
+                'texto': comentario.texto,
+                'usuario': comentario.usuario.username
+            })
+        print(data)
+        dataJson = json.dumps(data)
+        return HttpResponse(dataJson, content_type='application/json')
