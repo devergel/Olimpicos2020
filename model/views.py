@@ -241,7 +241,7 @@ def comment_service(request):
         data = []
         for comentario in comentarios:
             data.append({
-                'id': idParticipacion,
+                'id': comentario.participacion.idParticipacion,
                 'texto': comentario.texto,
                 'usuario': comentario.usuario.username
             })
